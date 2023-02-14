@@ -14,3 +14,12 @@ table{
   th{
     text-align: left;
   }
+
+  footer{
+    align-items: center; 
+    width: 40%;
+  }
+
+  .texto{
+    justify-content: end; 
+  }
