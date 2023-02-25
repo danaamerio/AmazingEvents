@@ -1,7 +1,8 @@
-let data = {
-    "currentDate": "2022-01-01",
-    "events": [
-      {
+
+
+const currentDate = "2022-01-01"
+const events = [
+    {
         _id: 1,
         "image":"https://i.postimg.cc/Fs03hQDt/Collectivities-Party.jpg",
         "name":"Collectivities Party",
@@ -12,8 +13,8 @@ let data = {
         "capacity":45000,
         "assistance":42756,
         "price":5
-      },
-      {
+    },
+    {
         _id: 2,
         "image":"https://i.postimg.cc/ZmD3Xf57/Korean-style.jpg",
         "name":"Korean style",
@@ -24,8 +25,8 @@ let data = {
         "capacity":45000,
         "assistance":42756,
         "price":10
-      },
-      {
+    },
+    {
         _id: 3,
         "image":"https://i.postimg.cc/GmHRkbNV/Jurassic-Park.jpg",
         "name":"Jurassic Park",
@@ -36,8 +37,8 @@ let data = {
         "capacity":82000,
         "assistance":65892,
         "price":15
-      },
-      {
+    },
+    {
         _id: 4,
         "image":"https://i.postimg.cc/c4C2zXm8/Parisian-Museum.jpg",
         "name":"Parisian Museum",
@@ -48,8 +49,8 @@ let data = {
         "capacity":8200,
         "estimate":8200,
         "price":3500
-      },
-      {
+    },
+    {
         _id: 5,
         "image":"https://i.postimg.cc/KYD0jMf2/comicon.jpg",
         "name":"Comicon",
@@ -60,8 +61,8 @@ let data = {
         "capacity":120000,
         "assistance":110000,
         "price":54
-      },
-      {
+    },
+    {
         _id: 6,
         "image":"https://i.postimg.cc/RZ9fH4Pr/halloween.jpg",
         "name":"Halloween Night",
@@ -72,8 +73,8 @@ let data = {
         "capacity":12000,
         "estimate":9000,
         "price":12
-      },
-      {
+    },
+    {
         _id: 7,
         "image":"https://i.postimg.cc/PrMJ0ZMc/Metallica-in-concert.jpg",
         "name":"Metallica in concert",
@@ -84,8 +85,8 @@ let data = {
         ,"capacity":138000,
         "estimate":138000,
         "price":150
-      },
-      {
+    },
+    {
         _id: 8,
         "image":"https://i.postimg.cc/KvsSK8cj/Electronic-Fest.jpg",
         "name":"Electronic Fest",
@@ -96,8 +97,8 @@ let data = {
         "capacity":138000,
         "assistance":110300,
         "price":250
-        },
-      {
+    },
+    {
         _id: 9,
         "image":"https://i.postimg.cc/fyLqZY9K/10-K-for-life.jpg",
         "name":"10K for life",
@@ -108,8 +109,8 @@ let data = {
         "capacity":30000,
         "assistance":25698,
         "price":3
-      },
-      {
+    },
+    {
         _id: 10,
         "image":"https://i.postimg.cc/zv67r65z/15kny.jpg",
         "name":"15K NY",
@@ -120,8 +121,8 @@ let data = {
         "capacity":3000000,
         "assistance":2569800,
         "price":3
-        },
-      {
+    },
+    {
         _id: 11,
         "image":"https://i.postimg.cc/Sst763n6/book1.jpg",
         "name":"School's book fair",
@@ -132,8 +133,8 @@ let data = {
         "capacity":150000,
         "estimate":123286,
         "price":1
-      },
-      {
+    },
+    {
         _id: 12,
         "image":"https://i.postimg.cc/05FhxHVK/book4.jpg",
         "name":"Just for your kitchen",
@@ -144,8 +145,8 @@ let data = {
         "capacity":130000,
         "assistance":90000,
         "price":100
-      },
-      {
+    },
+    {
         _id: 13,
         "image":"https://i.postimg.cc/vH52y81C/cinema4.jpg",
         "name":"Batman",
@@ -156,8 +157,8 @@ let data = {
         "capacity":11000,
         "assistance":9300,
         "price":225
-      },
-      {
+    },
+    {
         _id: 14,
         "image":"https://i.postimg.cc/T3C92KTN/scale.jpg",
         "name":"Avengers",
@@ -168,8 +169,31 @@ let data = {
         "capacity":9000,
         "estimate":9000,
         "price":250
-      }
-    ]
-  };
+    }
+]
+
+
+const contenedorCars = document.querySelector('#contenedor')
+
+let carsGeneradas = crearCars(events)
+
+contenedorCars.innerHTML = carsGeneradas
+
+function crearCars(arrayDatos){
+  let cars = ''
+  for (const event of arrayDatos){
+    cars += `<div class="card text-black" style="width: 18rem;">
+    <img src="${event.image}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">${event.name}</h5>
+      <p class="card-text flex-grow-1">${event.description}</p>
+    </div>
+ </div>`
+}
+return cars
+}
+
+
+  
 
   
