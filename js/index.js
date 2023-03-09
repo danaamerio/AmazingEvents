@@ -20,13 +20,37 @@ function crearCars(arrayDatos){
 return cars
 
 }
-//cate
+//categorias
+
+const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+
+    const categoriasSeleccionadas = [];
+    checkboxes.forEach(cb => {
+      if (cb.checked) {
+        categoriasSeleccionadas.push(cb.value);
+      }
+    });
+   
+    
+    const events = document.querySelector('.category');
+    events.innerHTML = "";
+    events.forEach(events => {
+ 
+      if (categoriasSeleccionadas.some(cat => events.category === cat)) {
+        events.innerHTML += `<div>${events.cars}</div>`;
+      }
+    });
+  });
+});
 
 
 
 
 //buscador
-let buttonEvents= document.getElementById("#button")
+let buttonEvents= document.getElementById("#boton")
 let checkboxEvents=document.querySelector("#categorias");
 
 function categoryCheckFilter (arrData){
@@ -40,7 +64,8 @@ function categoryCheckFilter (arrData){
 }
 
 
-buttonEvents.addEventListener ("click",(e)=>{ e.preventDefault();
+buttonEvents.addEventListener("click",(e)=>{ 
+  e.preventDefault();
   homeCards.innerHTML="";
   let searchEvent=document.getElementById("search").value;
   console.log(searchEvent);
