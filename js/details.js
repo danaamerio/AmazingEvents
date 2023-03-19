@@ -1,3 +1,15 @@
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing"
+let events = []
+
+async function traerDatos() {
+    fetch(urlApi)
+        .then(response => response.json())
+        .then(datosApi => {
+           events = datosApi.events
+            console.log("muestro array total");
+            console.log(events)
+
+
 const contenedorCars = document.querySelector('#contenedor')
 
 const _id = window.location.hash.substring(1);
@@ -28,3 +40,8 @@ function crearCars(eventosPasados){
 }
 return cars
 }
+})
+
+.catch(error => console.log(error.message))
+}
+traerDatos()

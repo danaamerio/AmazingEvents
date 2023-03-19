@@ -1,92 +1,80 @@
-//cards
-const contenedorCars = document.querySelector('#contenedor')
+let urlApi = "https://mindhub-xj03.onrender.com/api/amazing";
 
-let carsGeneradas = crearCars(events)
+async function traerDatos() {
+  fetch(urlApi)
+    .then((response) => response.json())
+    .then((datosApi) => {
+      let arrayGral = datosApi.events;
+      console.log("muestro array total");
+      console.log(arrayGral);
 
-contenedorCars.innerHTML = carsGeneradas
+      const contenedor = document.getElementById("contenedor");
+      const contenedorCategorias = document.getElementById("contenedorCategorias");
 
-function crearCars(arrayDatos){
-  let cars = ''
-  for (const event of arrayDatos){
-    cars += `<div class="card text-black text-bg-secondary" style="width: 18rem;">
-    <img src="${event.image}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">${event.name}</h5>
-      <p class="card-text flex-grow-1">${event.description}</p>
-      <a href="${'/details.html#'+event._id}" class="btn btn-primary">Details</a>
-    </div>
- </div>`
-}
-return cars
-
-}
-//categorias
-
-const checkboxes = document.querySelectorAll('input[type=checkbox]');
-
-checkboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', function() {
-
-    const categoriasSeleccionadas = [];
-    checkboxes.forEach(cb => {
-      if (cb.checked) {
-        categoriasSeleccionadas.push(cb.value);
+      function crearCards(arrayDatos) {
+        let cards = "";
+        for (const dataArray of arrayDatos) {
+          cards += `<div class="card text-black text-bg-secondary" style="width: 18rem;">
+                        <img src="${dataArray.image}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">${dataArray.name}</h5>
+                                <p class="card-text flex-grow-1">${dataArray.description}</p>
+                                <a href="${'/details.html#'+dataArray._id}" class="btn btn-primary">Details</a>
+                            </div>
+                    </div>`;
+        }
+        contenedor.innerHTML = cards;
       }
-    });
-   
-    
-    const events = document.querySelector('.category');
-    events.innerHTML = "";
-    events.forEach(events => {
- 
-      if (categoriasSeleccionadas.some(cat => events.category === cat)) {
-        events.innerHTML += `<div>${events.cars}</div>`;
+
+      function filtrarPorCategorias(categoriasSeleccionadas) {
+        const arrayFiltrado = arrayGral.filter((evento) =>
+          categoriasSeleccionadas.includes(evento.category)
+        );
+        crearCards(arrayFiltrado);
       }
-    });
-  });
-});
 
+      // Obtener todas las categorías disponibles
+      const categorias = Array.from(
+        new Set(arrayGral.map((evento) => evento.category))
+      );
 
+      // Mostrar checkboxes para cada categoría
+      const checkboxes = categorias
+        .map(
+          (categoria) =>
+            `<div class="form-check">
+              <input class="form-check-input" type="checkbox" value="${categoria}" id="${categoria}">
+              <label class="form-check-label" for="${categoria}">
+                ${categoria}
+              </label>
+            </div>`
+        )
+        .join("");
+      contenedorCategorias.innerHTML = checkboxes;
 
+      // Escuchar los eventos 'change' de los checkboxes
+      const checkboxInputs = document.querySelectorAll(
+        "#contenedorCategorias input[type=checkbox]"
+      );
+      checkboxInputs.forEach((checkbox) => {
+        checkbox.addEventListener("change", (event) => {
+          const categoriasSeleccionadas = Array.from(
+            checkboxInputs
+          )
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => checkbox.value);
 
-//buscador
-let buttonEvents= document.getElementById("#boton")
-let checkboxEvents=document.querySelector("#categorias");
+          if (categoriasSeleccionadas.length === 0) {
+            crearCards(arrayGral);
+          } else {
+            filtrarPorCategorias(categoriasSeleccionadas);
+          }
+        });
+      });
 
-function categoryCheckFilter (arrData){
-  let category = [];
-  for(let i=0; i<arrData.length; i++){
-    if(arrData[i].checked){
-      category.push(arrData[i].value);
-    }
-  }
-  return category;
+      crearCards(arrayGral);
+    })
+    .catch((error) => console.log(error.message));
 }
 
-
-buttonEvents.addEventListener("click",(e)=>{ 
-  e.preventDefault();
-  homeCards.innerHTML="";
-  let searchEvent=document.getElementById("search").value;
-  console.log(searchEvent);
-  let eventsearch=data.events.filter(data.events(e.category.toLowerCase().includes(searchEvent.toLowerCase())&&searchEvent !="")||event.descripcion.toLowerCase().includes(searchEvent.toLowerCase()));
-  let category=categoryCheckFilter(checkboxEvents);
-  let eventsCheck = data.events.filter(event=> category.includes(event.category));
-  let bothArr= eventsearch.concat(eventsCheck);
-  homecars.innerHTML =indexCars(bothArr);
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+traerDatos();
