@@ -10,6 +10,7 @@ async function traerDatos() {
 
       const contenedor = document.getElementById("contenedor");
       const contenedorCategorias = document.getElementById("contenedorCategorias");
+      const inputBusqueda = document.getElementById("inputBusqueda");
 
       function crearCards(arrayDatos) {
         let cards = "";
@@ -25,6 +26,7 @@ async function traerDatos() {
         }
         contenedor.innerHTML = cards;
       }
+
 
       function filtrarPorCategorias(categoriasSeleccionadas) {
         const arrayFiltrado = arrayGral.filter((evento) =>
